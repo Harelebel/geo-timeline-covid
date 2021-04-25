@@ -10,8 +10,11 @@ import { mapBoxAccesToken, arcgisUrl } from '../../constants'
 
 const L = window.L;
 var mymap;
-const Map = () => {
+let markerCluster = L.markerClusterGroup({ chunkedLoading: true });
 
+const Map = (props) => {
+    const { daysRange } = props;
+    console.log(props)
     useEffect(() => {
         console.log('useEffect 1: init Map');
         mymap = L.map('mapid').setView([32.0873550000001, 34.8289590000001], 13);
@@ -23,10 +26,10 @@ const Map = () => {
             zoomOffset: -1,
             accessToken: mapBoxAccesToken
         }).addTo(mymap);
-    
+
     }, [])
 
-    const addDataToMap = useCallback((data) => {
+    const addDataToMap = useCallback((data,daysRange = 7) => {
         let firstTime, lastTime;
         let markers = data.features.map(loc => {
             const prop = loc.properties;
@@ -40,7 +43,8 @@ const Map = () => {
             marker.bindPopup(propToText(prop));
             return marker;
         });
-        let markerCluster = L.markerClusterGroup({ chunkedLoading: true });
+        markers= markers.filter(marker=>new Date(marker.fromTime)>new Date(Date.now() - 1000 * 60 * 60 * 24 * Number(daysRange)));
+        markerCluster.clearLayers()
         markers.forEach(marker => {
             markerCluster.addLayer(marker);
         });
@@ -54,9 +58,9 @@ const Map = () => {
 
         fetch(arcgisUrl).then(res => res.json()).then(response => {
             console.log('loaded', response)
-            addDataToMap(response)
+            addDataToMap(response, daysRange)
         });
-    }, [addDataToMap])
+    }, [addDataToMap,daysRange])
 
     const propToText = (prop, sep) => {
         sep = sep || "<br>";
