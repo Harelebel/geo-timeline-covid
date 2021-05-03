@@ -9,17 +9,13 @@
 }
 .row-3-of-4{
     flex:3;
-    border: 2px dashed yellow;
 }
 .row-1-of-4{
    flex:1;
-   border: 2px dashed blue;
 }
 .col-1-of-9{
     flex:1;
-    border: 2px dashed red;
 }
 .col-8-of-9{
     flex:8;
-    border: 2px dashed green;
 }

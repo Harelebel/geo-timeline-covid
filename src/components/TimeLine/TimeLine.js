@@ -20,63 +20,31 @@ const useStyles = makeStyles((theme) => ({
 const TimeLine = (props) => {
 
 
-    const { daysRange, setDaysRange } = props;
+    let { markers } = props;
 
     const classes = useStyles();
 
-    return (<div>
-        <input type="range" min="1" max="14" value={daysRange} onChange={event => setDaysRange(Number(event.target.value))} />
-        <div>Current data is for {daysRange} days ago </div>
+    const timeLineEntries = markers ?
+        markers.sort((a,b)=>new Date(b.prop.fromTime)- new Date(a.prop.fromTime)).map(timeLineEntry => <TimelineItem>
+            <TimelineOppositeContent>
+                <Typography  >{timeLineEntry.prop.Place}</Typography>
+            </TimelineOppositeContent>
+            <TimelineSeparator>
+                <TimelineDot />
+                <TimelineConnector />
+            </TimelineSeparator>
+            <TimelineContent>
+                <Typography className={classes.text}>{new Date(timeLineEntry.prop.fromTime).toLocaleString('he-IL')}</Typography>
+            </TimelineContent>
+        </TimelineItem>)
+
+        : null
+
+    return (<div className="time-line-container">
+
         <React.Fragment>
-            <Timeline align="alternate">
-                <TimelineItem>
-                    <TimelineOppositeContent>
-                        <Typography className={classes.text}>מיון מחלקה פנימית ג' איכילוב</Typography>
-                    </TimelineOppositeContent>
-                    <TimelineSeparator>
-                        <TimelineDot />
-                        <TimelineConnector />
-                    </TimelineSeparator>
-                    <TimelineContent>
-                        <Typography>09:30 am</Typography>
-                    </TimelineContent>
-                </TimelineItem>
-                <TimelineItem>
-                    <TimelineOppositeContent>
-                        <Typography className={classes.text}>10:00 am</Typography>
-                    </TimelineOppositeContent>
-                    <TimelineSeparator>
-                        <TimelineDot />
-                        <TimelineConnector />
-                    </TimelineSeparator>
-                    <TimelineContent>
-                        <Typography>Code</Typography>
-                    </TimelineContent>
-                </TimelineItem>
-                <TimelineItem>
-                    <TimelineOppositeContent>
-                        <Typography className={classes.text}>12:00 am</Typography>
-                    </TimelineOppositeContent>
-                    <TimelineSeparator>
-                        <TimelineDot />
-                        <TimelineConnector />
-                    </TimelineSeparator>
-                    <TimelineContent>
-                        <Typography className={classes.text}>Sleep</Typography>
-                    </TimelineContent>
-                </TimelineItem>
-                <TimelineItem>
-                    <TimelineOppositeContent>
-                        <Typography className={classes.text}>9:00 am</Typography>
-                    </TimelineOppositeContent>
-                    <TimelineSeparator>
-                        <TimelineDot />
-                        <TimelineConnector />
-                    </TimelineSeparator>
-                    <TimelineContent>
-                        <Typography className={classes.text}>Repeat</Typography>
-                    </TimelineContent>
-                </TimelineItem>
+            <Timeline >
+            {timeLineEntries}
             </Timeline>
         </React.Fragment>
     </div>

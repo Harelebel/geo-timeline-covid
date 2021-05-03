@@ -1,3 +1,7 @@
 span{
     direction:rtl
 }
+.time-line-container{
+    overflow:auto;
+    height:90vh;
+}
