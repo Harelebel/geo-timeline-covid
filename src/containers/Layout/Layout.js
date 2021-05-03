@@ -1,11 +1,12 @@
-import Header from '../Header/Header';
-import Map from '../Map/Map';
-import TimeLine from '../TimeLine/TimeLine';
+import Header from '../../components/Header/Header';
+import Map from '../../components/Map/Map';
+import TimeLine from '../../components/TimeLine/TimeLine';
 import './Layout.css'
-import React ,{useState} from 'react';
-const Layout = (props) => {
+import useIndications from '../../hooks/useIndications';
+const Layout = () => { // TODO - how to change architechture ?
 
-    const [daysRange,setDaysRange]= useState(5);
+    let { daysRange, setDaysRange } = useIndications()
+
  
 
     return (
@@ -17,10 +18,10 @@ const Layout = (props) => {
 
                 <div className="row">
                     <div className="row-3-of-4">
-                        <Map daysRange={daysRange} ></Map>
+                        <Map  daysRange={daysRange}></Map>
                     </div>
                     <div className="row-1-of-4">
-                        <TimeLine daysRange={daysRange} onChangeRange={setDaysRange}></TimeLine>
+                        <TimeLine daysRange={daysRange} setDaysRange={setDaysRange}   ></TimeLine>
                     </div>
                 </div>
             </div>
