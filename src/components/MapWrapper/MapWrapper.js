@@ -17,12 +17,7 @@ L.Marker.prototype.options.icon = DefaultIcon;
 
 const mapLocation = [32.0873550000001, 34.8289590000001];
 
-
-const MapWrapper = (props) => {
-    // const map = useMapEvents();
-    // const [bounds, setBounds] = useState(map.getBounds())
-
-    let { markers } = props;
+const MapWrapper = ({ markers: indications,  setBounds }) => {
 
     const propToText = (prop, sep) => {
         sep = sep || "<br>";
@@ -32,9 +27,9 @@ const MapWrapper = (props) => {
         text += sep + "עזב ב " + new Date(prop.toTime).toLocaleString('he-IL');
         return text;
     }
-    markers = markers ? markers.map(marker => <Marker position={marker.position} title={propToText(marker.prop, "\n")}>
+    indications = indications ? indications.map(indication => <Marker position={indication.position} title={propToText(indication.prop, "\n")}>
         <Popup>
-            {propToText(marker.prop, "\n")}
+            {propToText(indication.prop, "\n")}
         </Popup>
     </Marker>) : null;
 
@@ -45,7 +40,7 @@ const MapWrapper = (props) => {
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
             <MarkerClusterGroup>
-                <Map markers={markers}></Map>
+                <Map markers={indications} setBounds={setBounds}></Map>
             </MarkerClusterGroup>
 
         </MapContainer>

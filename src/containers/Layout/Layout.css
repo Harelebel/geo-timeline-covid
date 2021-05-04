@@ -15,6 +15,10 @@
 }
 .col-1-of-9{
     flex:1;
+    margin-right: 2rem;
+}
+.col-1-of-9 div{
+    direction: rtl;
 }
 .col-8-of-9{
     flex:8;

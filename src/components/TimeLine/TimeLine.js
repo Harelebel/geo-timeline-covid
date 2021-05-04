@@ -11,21 +11,18 @@ import TimelineDot from '@material-ui/lab/TimelineDot';
 import Typography from '@material-ui/core/Typography';
 
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     text: {
         'font-size': '.7rem',
     }
 }));
 
-const TimeLine = (props) => {
-
-
-    let { markers } = props;
+const TimeLine = ({  indications, bounds }) => {
 
     const classes = useStyles();
-
-    const timeLineEntries = markers ?
-        markers.sort((a,b)=>new Date(b.prop.fromTime)- new Date(a.prop.fromTime)).map(timeLineEntry => <TimelineItem>
+    console.log('timeline rerender')
+    const timeLineEntries = indications && bounds ?
+        indications.filter(indication=>bounds.contains(indication.position)).sort((a,b)=>new Date(b.prop.fromTime)- new Date(a.prop.fromTime)).map(timeLineEntry => <TimelineItem>
             <TimelineOppositeContent>
                 <Typography  >{timeLineEntry.prop.Place}</Typography>
             </TimelineOppositeContent>

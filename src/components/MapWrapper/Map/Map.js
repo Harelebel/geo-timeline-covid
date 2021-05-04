@@ -1,15 +1,25 @@
-import React, { useEffect, useState } from 'react';
-import { useMap } from 'react-leaflet'
+import React, { useEffect } from 'react';
+import { useMap, useMapEvents } from 'react-leaflet'
+// THIS COMPONENT EXISTS ONLY BEACUSE IT WAS NOT POSSIBLE TO USE useMapEvents IN MapWrapper 
+const Map = ({ markers, bounds, setBounds }) => {
+    const map = useMap();
+    useMapEvents({
+        dragend: (leafletEvent) => {
+            console.log(leafletEvent + 'dragend')
+            setBounds(map.getBounds())
+        },
+        zoomend: (leafletEvent) => {
+            console.log(leafletEvent + 'zoom')
+            setBounds(map.getBounds())
 
-const Map = (props) => {
-    let { markers } = props;
-    const map = useMap()
-
-    // markers = markers ? markers.filter(marker => map.getBounds().contains(marker.props.position)) : null;
+        }
+    })
 
     useEffect(() => {
+        setBounds(map.getBounds())
+        // eslint-disable-next-line
+    }, [])
 
-    }, [markers])
     return (<React.Fragment>
         {markers}
     </React.Fragment>
@@ -17,3 +27,5 @@ const Map = (props) => {
 }
 
 export default Map;
+
+

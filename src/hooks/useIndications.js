@@ -3,7 +3,8 @@ import { arcgisUrl } from '../constants'
 
 const useIndications = () => {
     const [daysRange, setDaysRange] = useState(10);
-    let [markers, setMarkers] = useState();
+    let [indications, setIndications] = useState();
+    let [bounds, setBounds] = useState();
 
     //setMarkers : relevant for map and for timeline. 
 
@@ -18,21 +19,17 @@ const useIndications = () => {
         //Filter By Date
         markers = markers.filter(marker => new Date(marker.startDate) > 
         new Date(Date.now() - 1000 * 60 * 60 * 24 * Number(daysRange)))
-        setMarkers(markers);
+        setIndications(markers);
     }, [])
 
     useEffect(() => {
-        console.log('useEffect 2: getData');
         fetch(arcgisUrl).then(res => res.json()).then(response => {
-            console.log('loaded', response)
             addDataToMap(response, daysRange)
         });
     }, [addDataToMap, daysRange])
 
-    //next - will be set by boundries to timeline
 
-
-    return { daysRange, setDaysRange, markers };
+    return { daysRange, setDaysRange, indications, bounds, setBounds };
 }
 
 export default useIndications;

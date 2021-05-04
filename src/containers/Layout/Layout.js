@@ -5,7 +5,7 @@ import './Layout.css'
 import useIndications from '../../hooks/useIndications';
 const Layout = () => { // TODO - how to change architechture ?
 
-    let { daysRange, setDaysRange , markers} = useIndications()
+    let { daysRange, setDaysRange , indications , bounds, setBounds} = useIndications()
 
  
 
@@ -18,10 +18,10 @@ const Layout = () => { // TODO - how to change architechture ?
 
                 <div className="row">
                     <div className="row-3-of-4">
-                        <MapWrapper markers={markers}></MapWrapper>
+                        <MapWrapper markers={indications} bounds={bounds} setBounds={setBounds} ></MapWrapper>
                     </div>
                     <div className="row-1-of-4">
-                        <TimeLine markers={markers}></TimeLine>
+                        <TimeLine indications={indications} bounds={bounds}></TimeLine>
                     </div>
                 </div>
             </div>
