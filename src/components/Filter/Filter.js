@@ -1,5 +1,7 @@
+import React from "react";
 
 const Filter = ( { daysRange, setDaysRange }) => {
+    console.log('filter')
 
     return (<div>  {daysRange} ימים אחרונים 
         <br />
@@ -8,4 +10,4 @@ const Filter = ( { daysRange, setDaysRange }) => {
     </div>);
 }
 
-export default Filter;
+export default React.memo(Filter);

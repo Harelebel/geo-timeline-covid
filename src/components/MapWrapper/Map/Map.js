@@ -5,11 +5,9 @@ const Map = ({ markers, bounds, setBounds }) => {
     const map = useMap();
     useMapEvents({
         dragend: (leafletEvent) => {
-            console.log(leafletEvent + 'dragend')
             setBounds(map.getBounds())
         },
         zoomend: (leafletEvent) => {
-            console.log(leafletEvent + 'zoom')
             setBounds(map.getBounds())
 
         }
@@ -19,7 +17,7 @@ const Map = ({ markers, bounds, setBounds }) => {
         setBounds(map.getBounds())
         // eslint-disable-next-line
     }, [])
-
+console.log('map')
     return (<React.Fragment>
         {markers}
     </React.Fragment>

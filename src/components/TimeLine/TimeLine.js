@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo, useState } from 'react';
 import './TimeLine.css';
 import { makeStyles } from '@material-ui/core/styles';
 import Timeline from '@material-ui/lab/Timeline';
@@ -17,31 +17,37 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-const TimeLine = ({  indications, bounds }) => {
+const TimeLine = ({ indications, bounds }) => {
 
     const classes = useStyles();
     console.log('timeline rerender')
-    const timeLineEntries = indications && bounds ?
-        indications.filter(indication=>bounds.contains(indication.position)).sort((a,b)=>new Date(b.prop.fromTime)- new Date(a.prop.fromTime)).map(timeLineEntry => <TimelineItem>
-            <TimelineOppositeContent>
-                <Typography  >{timeLineEntry.prop.Place}</Typography>
-            </TimelineOppositeContent>
-            <TimelineSeparator>
-                <TimelineDot />
-                <TimelineConnector />
-            </TimelineSeparator>
-            <TimelineContent>
-                <Typography className={classes.text}>{new Date(timeLineEntry.prop.fromTime).toLocaleString('he-IL')}</Typography>
-            </TimelineContent>
-        </TimelineItem>)
+    
+    const timeLineEntries = useMemo(() => {
+        if (indications && bounds) {
+            console.log('timeline MEMO rerender')
+            return indications.filter(indication => bounds.contains(indication.position)).sort((a, b) => new Date(b.prop.fromTime) - new Date(a.prop.fromTime)).map((timeLineEntry, index) => <TimelineItem key={index}>
+                <TimelineOppositeContent>
+                    <Typography  >{timeLineEntry.prop.Place}</Typography>
+                </TimelineOppositeContent>
+                <TimelineSeparator>
+                    <TimelineDot />
+                    <TimelineConnector />
+                </TimelineSeparator>
+                <TimelineContent>
+                    <Typography className={classes.text}>{new Date(timeLineEntry.prop.fromTime).toLocaleString('he-IL')}</Typography>
+                </TimelineContent>
+            </TimelineItem>)
+        }
 
-        : null
+    }
+        , [bounds,indications]);
+
 
     return (<div className="time-line-container">
 
         <React.Fragment>
             <Timeline >
-            {timeLineEntries}
+                {timeLineEntries}
             </Timeline>
         </React.Fragment>
     </div>

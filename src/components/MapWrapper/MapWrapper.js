@@ -27,7 +27,7 @@ const MapWrapper = ({ markers: indications,  setBounds }) => {
         text += sep + "עזב ב " + new Date(prop.toTime).toLocaleString('he-IL');
         return text;
     }
-    indications = indications ? indications.map(indication => <Marker position={indication.position} title={propToText(indication.prop, "\n")}>
+    indications = indications ? indications.map((indication, index) => <Marker key={index} position={indication.position} title={propToText(indication.prop, "\n")}>
         <Popup>
             {propToText(indication.prop, "\n")}
         </Popup>
