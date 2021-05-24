@@ -1,11 +1,12 @@
 .container{
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: 100%;
+    background: aliceblue;
 }
 .row{
     display: flex;
-    height: 100%;
+    height:85vh;
 }
 .row-3-of-4{
     flex:3;
@@ -15,11 +16,21 @@
 }
 .col-1-of-9{
     flex:1;
-    margin-right: 2rem;
+    
 }
 .col-1-of-9 div{
     direction: rtl;
+    border-radius: 10px;
+    margin: 1rem;
+    background: #FFF;
 }
 .col-8-of-9{
     flex:8;
 }
+
+@media screen and (min-height: 800px) {
+    .row {
+        height: 90vh;
+    }
+  }
+  
